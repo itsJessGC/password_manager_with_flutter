@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 class App_Style{
 
   //Default colors for style
-  static Color backgroundColor = Color(0xFFe2e2fe);
-  static Color mainColor = Color(0xFF000633);
+  static Color backgroundColor = Color(0xFFE2E2FE);
+  static Color mainColor = Color(0x3d405b);
   static Color accentColor = Color(0xFF0065FF);
 
   //Setting the cards different color
