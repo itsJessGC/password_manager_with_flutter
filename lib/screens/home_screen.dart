@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:password_manager_flutter/screens/account_editor.dart';
+import 'package:password_manager_flutter/screens/account_reader.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
 import 'package:password_manager_flutter/widgets/account_card.dart';
 
@@ -56,7 +58,14 @@ class _Home_ScreenState extends State<Home_Screen> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2),
                       children: snapshot.data!.docs
-                          .map((note) => accountCard(() {}, note))
+                          .map((account) => accountCard(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AccountReaderScreen(account),
+                                    ));
+                              }, account))
                           .toList(),
                     );
                   }
@@ -71,8 +80,10 @@ class _Home_ScreenState extends State<Home_Screen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text("Add a new account"),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AccountEditorScreen()));
+        },
+        label: Text("Add an account"),
         icon: Icon(Icons.add),
       ),
     );
