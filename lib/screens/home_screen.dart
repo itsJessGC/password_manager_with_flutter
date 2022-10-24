@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:password_manager_flutter/screens/account_editor.dart';
+import 'package:password_manager_flutter/screens/account_creator.dart';
 import 'package:password_manager_flutter/screens/account_reader.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
 import 'package:password_manager_flutter/widgets/account_card.dart';
@@ -81,7 +81,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AccountEditorScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AccountCreatorScreen()));
         },
         label: Text("Add an account"),
         icon: Icon(Icons.add),

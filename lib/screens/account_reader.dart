@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/screens/account_delete.dart';
+import 'package:password_manager_flutter/screens/account_editor.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
 
-import 'account_editor.dart';
+import 'account_creator.dart';
 
 class AccountReaderScreen extends StatefulWidget {
   AccountReaderScreen(this.doc, {Key? key}) : super(key: key);
@@ -27,6 +28,12 @@ class _AccountReaderScreenState extends State<AccountReaderScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton.icon(
+              onPressed: () => _deleteAccount(widget.doc.id).then((value) => Navigator.pop(context)),
+              label: Text("Delete account"),
+              icon: Icon(Icons.delete),
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+            ),
             Text(
               widget.doc["account_title"],
               style: App_Style.mainTitle,
@@ -49,17 +56,18 @@ class _AccountReaderScreenState extends State<AccountReaderScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _deleteAccount(widget.doc.id),
-        label: Text("Delete account"),
-        icon: Icon(Icons.delete),
-        backgroundColor: Colors.red,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AccountEditorScreen(widget.doc)));
+        },
+        label: Text("Edit account"),
+        icon: Icon(Icons.edit),
       ),
     );
   }
 }
 
 Future<void> _deleteAccount(String id) async {
-
   final _deletedAccount = FirebaseFirestore.instance;
 
   await _deletedAccount.collection("accounts").doc(id).delete();

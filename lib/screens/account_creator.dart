@@ -4,27 +4,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
 
-import 'home_screen.dart';
+class AccountCreatorScreen extends StatefulWidget {
+  const AccountCreatorScreen({Key? key}) : super(key: key);
 
-class AccountEditorScreen extends StatefulWidget {
-  AccountEditorScreen(this.doc, {Key? key}) : super(key: key);
-  QueryDocumentSnapshot doc;
   @override
-  State<AccountEditorScreen> createState() => _AccountEditorScreenState();
+  State<AccountCreatorScreen> createState() => _AccountCreatorScreenState();
 }
 
-class _AccountEditorScreenState extends State<AccountEditorScreen> {
+class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
   int color_id = Random().nextInt(App_Style.colorOfCards.length);
   String date = DateTime.now().toString();
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _mainController = TextEditingController();
-
-  void initState() {
-    super.initState();
-    _titleController.text = widget.doc.get("account_title").toString();
-    _mainController.text = widget.doc.get("password").toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +27,7 @@ class _AccountEditorScreenState extends State<AccountEditorScreen> {
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          "Edit Account",
+          "Add a new Account",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -80,21 +72,18 @@ class _AccountEditorScreenState extends State<AccountEditorScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: App_Style.accentColor,
         onPressed: () async {
-          var updatePlace = FirebaseFirestore.instance.collection("accounts");
-          updatePlace
-              .doc(widget.doc.id)
-              .update({
-                "account_title": _titleController.text,
-                "creation_date": date,
-                "password": _mainController.text,
-                "color_id": color_id
-              })
-              .then((value) => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Home_Screen())))
-              .catchError(
-                  (error) => print("Failed to update Account due to $error"));
+          FirebaseFirestore.instance.collection("accounts").add({
+            "account_title": _titleController.text,
+            "creation_date": date,
+            "password": _mainController.text,
+            "color_id": color_id
+          }).then((value) {
+            print(value.id);
+            Navigator.pop(context);
+          }).catchError(
+              (error) => print("Failed to add Account due to $error"));
         },
-        child: Icon(Icons.save_outlined),
+        child: Icon(Icons.save),
       ),
     );
   }
