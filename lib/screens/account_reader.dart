@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/screens/account_delete.dart';
 import 'package:password_manager_flutter/screens/account_editor.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
+import 'package:password_manager_flutter/security/encrypted_values.dart';
 
 import 'account_creator.dart';
 
@@ -14,6 +15,7 @@ class AccountReaderScreen extends StatefulWidget {
 }
 
 class _AccountReaderScreenState extends State<AccountReaderScreen> {
+
   @override
   Widget build(BuildContext context) {
     int color_id = widget.doc['color_id'];
@@ -49,7 +51,7 @@ class _AccountReaderScreenState extends State<AccountReaderScreen> {
               height: 28.0,
             ),
             Text(
-              widget.doc["password"],
+              Encrypted_Val.decryptMyData(widget.doc["password"]),
               style: App_Style.mainContent,
             ),
           ],

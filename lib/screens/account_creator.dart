@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
+import 'package:password_manager_flutter/security/encrypted_values.dart';
 
 class AccountCreatorScreen extends StatefulWidget {
   const AccountCreatorScreen({Key? key}) : super(key: key);
@@ -75,7 +76,7 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
           FirebaseFirestore.instance.collection("accounts").add({
             "account_title": _titleController.text,
             "creation_date": date,
-            "password": _mainController.text,
+            "password": Encrypted_Val.encryptMyData(_mainController.text),
             "color_id": color_id
           }).then((value) {
             print(value.id);

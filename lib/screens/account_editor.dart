@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
+import 'package:password_manager_flutter/security/encrypted_values.dart';
 
 import 'home_screen.dart';
 
@@ -23,7 +24,7 @@ class _AccountEditorScreenState extends State<AccountEditorScreen> {
   void initState() {
     super.initState();
     _titleController.text = widget.doc.get("account_title").toString();
-    _mainController.text = widget.doc.get("password").toString();
+    _mainController.text = Encrypted_Val.decryptMyData(widget.doc.get("password").toString());
   }
 
   @override
@@ -86,7 +87,7 @@ class _AccountEditorScreenState extends State<AccountEditorScreen> {
               .update({
                 "account_title": _titleController.text,
                 "creation_date": date,
-                "password": _mainController.text,
+                "password": Encrypted_Val.encryptMyData(_mainController.text),
                 "color_id": color_id
               })
               .then((value) => Navigator.push(context,
