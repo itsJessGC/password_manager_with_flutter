@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:password_manager_flutter/styles/app_style.dart';
 import 'package:password_manager_flutter/security/encrypted_values.dart';
+import 'package:password_manager_flutter/security/code_generator.dart';
 
 class AccountCreatorScreen extends StatefulWidget {
   const AccountCreatorScreen({Key? key}) : super(key: key);
@@ -18,7 +19,10 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _mainController = TextEditingController();
-
+  void initState() {
+    super.initState();
+    _mainController.text = Code_Creator.CreateCryptoRandomString();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
