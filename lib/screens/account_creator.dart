@@ -18,10 +18,12 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
   String date = DateTime.now().toString();
 
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _mainController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   void initState() {
     super.initState();
-    _mainController.text = Code_Creator.CreateCryptoRandomString();
+    _passwordController.text = Code_Creator.CreateCryptoRandomString();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,33 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
               height: 28.0,
             ),
             TextField(
-              controller: _mainController,
+              controller: _emailController,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'email',
+              ),
+              style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            TextField(
+              controller: _usernameController,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'username',
+              ),
+              style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            TextField(
+              controller: _passwordController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: InputDecoration(
@@ -70,6 +98,9 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
                 hintText: 'Password',
               ),
               style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 8.0,
             ),
           ],
         ),
@@ -80,7 +111,9 @@ class _AccountCreatorScreenState extends State<AccountCreatorScreen> {
           FirebaseFirestore.instance.collection("accounts").add({
             "account_title": _titleController.text,
             "creation_date": date,
-            "password": Encrypted_Val.encryptMyData(_mainController.text),
+            "email": Encrypted_Val.encryptMyData(_emailController.text),
+            "username": Encrypted_Val.encryptMyData(_usernameController.text),
+            "password": Encrypted_Val.encryptMyData(_passwordController.text),
             "color_id": color_id
           }).then((value) {
             print(value.id);

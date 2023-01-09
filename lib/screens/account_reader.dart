@@ -51,8 +51,25 @@ class _AccountReaderScreenState extends State<AccountReaderScreen> {
               height: 28.0,
             ),
             Text(
+              Encrypted_Val.decryptMyData(widget.doc["email"]),
+              style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 28.0,
+            ),
+            Text(
+              Encrypted_Val.decryptMyData(widget.doc["username"]),
+              style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 28.0,
+            ),
+            Text(
               Encrypted_Val.decryptMyData(widget.doc["password"]),
               style: App_Style.mainContent,
+            ),
+            SizedBox(
+              height: 28.0,
             ),
           ],
         ),
